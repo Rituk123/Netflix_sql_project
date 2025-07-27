@@ -67,28 +67,28 @@ order by total_content desc
 SELECT * FROM netflix
 where type='Movie' and duration= (select max(duration) from netflix)
 
-6. Find Content Added in the Last 5 Years
+### 6. Find Content Added in the Last 5 Years
 SELECT*FROM netflix
 where TO_DATE(date_added,'Month DD,YYYY')>= CURRENT_DATE-INTERVAL'5 YEARS'
 
-7. Find All Movies/TV Shows by Director 'Rajiv Chilaka'
+### 7. Find All Movies/TV Shows by Director 'Rajiv Chilaka'
 SELECT*FROM netflix
 where director ilike '%Rajiv Chilaka%'
 
-8. List All TV Shows with More Than 5 Seasons
+### 8. List All TV Shows with More Than 5 Seasons
 select*,
 SPLIT_PART(duration,' ',1) as season
 from netflix
 where type='TV Show' and cast(SPLIT_PART(duration,' ',1) as INTEGER)>=5
 
-9. Count the Number of Content Items in Each Genre
+### 9. Count the Number of Content Items in Each Genre
 select unnest(STRING_TO_ARRAY(listed_in,','))as genre,
 count(show_id) as content
 from netflix
 group by genre
 order by content desc
 
-10.Find each year and the average numbers of content release in India on netflix.
+### 10.Find each year and the average numbers of content release in India on netflix.
 return top 5 year with highest avg content release!
 
 select extract(year from TO_DATE(date_added,'Month DD,YYYY')) as year,count(show_id) as content ,
@@ -98,26 +98,26 @@ where country='India'
 group by year
 order by content desc
 
-11. List All Movies that are Documentaries
+### 11. List All Movies that are Documentaries
 select*from netflix
 where type='Movie' and listed_in ilike '%documentaries%'
 
-12. Find All Content Without a Director
+### 12. Find All Content Without a Director
 SELECT*FROM netflix
 where director is null
 
-13. Find How Many Movies Actor 'Salman Khan' Appeared in the Last 10 Years
+### 13. Find How Many Movies Actor 'Salman Khan' Appeared in the Last 10 Years
 SELECT*FROM netflix
 where release_year>= Extract (Year from CURRENT_DATE)-10 and casts ilike '%Salman Khan%'
 
-14. Find the Top 10 Actors Who Have Appeared in the Highest Number of Movies Produced in India
+### 14. Find the Top 10 Actors Who Have Appeared in the Highest Number of Movies Produced in India
 SELECT unnest(STRING_TO_ARRAY (casts,',')) as actors ,count(show_id) as content FROM netflix
 where country ilike '%India%'
 group by actors
 Order by content desc
 limit 10
 
-15. Categorize Content Based on the Presence of 'Kill' and 'Violence' Keywords
+### 15. Categorize Content Based on the Presence of 'Kill' and 'Violence' Keywords
 with new_table
 as
 (
